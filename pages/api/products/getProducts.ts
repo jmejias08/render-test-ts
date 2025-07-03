@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
     return res.status(200).json(products);
-  } catch (err) {
+  } catch  {
     return res.status(401).json({ message: 'Token inválido' });
   }
 }

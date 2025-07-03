@@ -68,7 +68,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ onAddProduct }) => {
         alert('Producto eliminado correctamente');
         fetchProducts();
       }
-    } catch (err) {
+    } catch  {
       alert('Error de red o servidor');
     }
   };

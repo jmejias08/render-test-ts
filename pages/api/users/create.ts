@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       role: 'super' | 'admin' | 'employee';
       officeId: number;
     };
-  } catch (err) {
+  } catch  {
     return res.status(401).json({ message: 'Token inválido o expirado' });
   }
 

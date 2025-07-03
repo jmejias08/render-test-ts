@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next';
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
 import FormModal from '../components/clients/CreateClientModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/NavBar';
@@ -13,7 +12,7 @@ type Props = {
   officeId: number;
 };
 
-export default function Clients({ username, role, officeId }: Props) {
+export default function Clients({ }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);

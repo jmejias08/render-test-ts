@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap'; // Importa Button de react-bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importa el CSS de Bootstrap una vez en _app.tsx o aquí
 import Navbar from '../components/NavBar';
 import { verifyToken } from '../lib/verifyToken';
@@ -18,7 +17,7 @@ type Props = {
 };
 
 // Componente que muestra los datos del usuario autenticado y un botón para abrir el modal
-export default function Users({ username, role, officeId }: Props) {
+export default function Users({  }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);

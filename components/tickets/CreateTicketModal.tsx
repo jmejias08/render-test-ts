@@ -151,7 +151,7 @@ const CreateTicketModal: React.FC<FormModalProps> = ({ show, onHide }) => {
     const quantity = parseFloat(product.quantity) || 0;
     const discount = parseFloat(product.discount) || 0;
 
-    let base = price * quantity * (1 - discount / 100);
+    const base = price * quantity * (1 - discount / 100);
     totalDiscount += price * quantity * (discount / 100);
 
     let impuesto = 0;
@@ -263,7 +263,7 @@ const CreateTicketModal: React.FC<FormModalProps> = ({ show, onHide }) => {
                 const taxes = parseFloat(product.taxes) || 0;
                 const exonerated = Boolean(product.exonerated);
 
-                let base = price * quantity * (1 - discount / 100);
+                const base = price * quantity * (1 - discount / 100);
                 let impuesto = 0;
                 if (needsFacture) {
                   impuesto = base * ((exonerated ? taxes : 13) / 100);

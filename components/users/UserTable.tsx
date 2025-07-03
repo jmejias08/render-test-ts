@@ -75,7 +75,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ onAddUser }) => {
         alert('Usuario eliminado correctamente');
         fetchUsers();
       }
-    } catch (err) {
+    } catch  {
       alert('Error de red o servidor');
     }
   };

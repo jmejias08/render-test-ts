@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await prisma.clients.delete({ where: { id } });
     return res.status(200).json({ message: 'Usuario eliminado correctamente' });
-  } catch (err) {
+  } catch {
     return res.status(500).json({ message: 'Error al eliminar usuario' });
   }
 }

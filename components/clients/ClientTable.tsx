@@ -79,7 +79,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ onAddClient }) => {
         alert('Cliente eliminado correctamente');
         fetchClients();
       }
-    } catch (err) {
+    } catch  {
       alert('Error de red o servidor');
     }
   };

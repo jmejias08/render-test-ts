@@ -51,7 +51,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({ product, show, onCl
         setMessage('Producto actualizado correctamente');
         onUpdate();
         onClose();
-        } catch (err) {
+        } catch  {
         setMessage('Error de red o servidor');
         }
     };

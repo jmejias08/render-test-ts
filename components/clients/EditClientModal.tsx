@@ -59,7 +59,7 @@ const EditClientModal: React.FC<EditClientModalProps> = ({ client, show, onClose
       setMessage('Cliente actualizado correctamente');
       onUpdate();
       onClose();
-    } catch (err) {
+    } catch  {
       setMessage('Error de red o servidor');
     }
   };

@@ -111,7 +111,7 @@ const FactureTicketDetailsModal: React.FC<FactureTicketDetailsModalProps> = ({
                     alert('Ticket facturado correctamente.');
                     onUpdate();
                     onClose();
-                  } catch (e) {
+                  } catch  {
                     alert('Error de red al facturar el ticket');
                   }
                 }}

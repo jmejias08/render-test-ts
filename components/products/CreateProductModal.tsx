@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 
 interface FormModalProps {

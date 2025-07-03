@@ -14,8 +14,7 @@ const TicketDetailsModal: React.FC<TicketDetailsModalProps> = ({
   ticket,
   show,
   onClose,
-  onUpdate,
-}) => {
+  }) => {
   const [error, setError] = useState('');
   const [ticketDetails, setTicketDetails] = useState<TicketDetail[]>([]);
 

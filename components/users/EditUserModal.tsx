@@ -45,7 +45,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, show, onClose, onUp
       setMessage('Usuario actualizado correctamente');
       onUpdate();
       onClose();
-    } catch (err) {
+    } catch  {
       setMessage('Error de red o servidor');
     }
   };

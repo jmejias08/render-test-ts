@@ -1,6 +1,4 @@
 import { GetServerSideProps } from 'next';
-import jwt from 'jsonwebtoken';
-import nookies from 'nookies';
 import LogoutButton from '../components/LogoutButton';
 import Navbar from '../components/NavBar';
 import { verifyToken } from '../lib/verifyToken';
