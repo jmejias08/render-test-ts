@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model clients {
+  id        Int       @id @default(autoincrement())
+  office_id Int?
+  id_card   String?   @db.VarChar(50)
+  name      String?   @db.VarChar(100)
+  phone     String?   @db.VarChar(20)
+  email     String?   @db.VarChar(100)
+  address   String?
+  offices   offices?  @relation(fields: [office_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_client_offices")
+  pays      pays[]
+  tickets   tickets[]
+}
+
+model offices {
+  id       Int        @id @default(autoincrement())
+  name     String?    @db.VarChar(100)
+  phone    String?    @db.VarChar(20)
+  address  String?
+  email    String?    @db.VarChar(100)
+  id_card  String?    @db.VarChar(50)
+  clients  clients[]
+  pays     pays[]
+  products products[]
+  tickets  tickets[]
+  users    users[]
+}
+
+model pays {
+  id         Int      @id @default(autoincrement())
+  office_id  Int?
+  ticket_id  Int?
+  client_id  Int?
+  type       String?  @db.VarChar(50)
+  cash       Decimal? @db.Decimal(10, 2)
+  transfer   Decimal? @db.Decimal(10, 2)
+  card       Decimal? @db.Decimal(10, 2)
+  sinpe      Decimal? @db.Decimal(10, 2)
+  bank_check Decimal? @db.Decimal(10, 2)
+  mixed      Decimal? @db.Decimal(10, 2)
+  pay_type   String?  @db.VarChar(10)
+  clients    clients? @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_pay_clients")
+  offices    offices? @relation(fields: [office_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_pay_offices")
+  tickets    tickets? @relation(fields: [ticket_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_pay_tickets")
+}
+
+model pending_pay_tickets {
+  id_ticket    Int       @id
+  state        String?   @db.VarChar(50)
+  exp_date     DateTime? @db.Date
+  total_to_pay Decimal?  @db.Decimal(10, 2)
+  total_payed  Decimal?  @db.Decimal(10, 2)
+  description  String?
+  tickets      tickets   @relation(fields: [id_ticket], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_pending_pay_tickets_tickets")
+}
+
+model products {
+  id             Int              @id @default(autoincrement())
+  name           String?          @db.VarChar(100)
+  price          Decimal?         @db.Decimal(10, 2)
+  office_id      Int?
+  description    String?          @default("Sin descripción")
+  offices        offices?         @relation(fields: [office_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_offices")
+  ticket_details ticket_details[]
+}
+
+model ticket_details {
+  ticket_id  Int
+  product_id Int
+  quantity   Int?
+  discount   Decimal? @db.Decimal(5, 2)
+  price      Decimal? @db.Decimal(10, 2)
+  taxes      Decimal? @db.Decimal(10, 2)
+  exonerated Boolean?
+  products   products @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ticket_detail_products")
+  tickets    tickets  @relation(fields: [ticket_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ticket_detail_tickets")
+
+  @@id([ticket_id, product_id])
+}
+
+model tickets {
+  id                  Int                  @id @default(autoincrement())
+  office_id           Int?
+  user_id             Int?
+  client_id           Int?
+  type                String?              @db.VarChar(50)
+  vehicle_plate       String?              @db.VarChar(20)
+  date                DateTime?            @default(now()) @db.Timestamp(6)
+  needs_facture       Boolean?
+  payment_status      Boolean?
+  is_canceled         Boolean?             @default(false)
+  comment             String?              @default("Sin comentario")
+  pays                pays[]
+  pending_pay_tickets pending_pay_tickets?
+  ticket_details      ticket_details[]
+  clients             clients?             @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ticket_clients")
+  offices             offices?             @relation(fields: [office_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ticket_offices")
+  users               users?               @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ticket_users")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id        Int        @id @default(autoincrement())
+  username  String     @unique @db.VarChar(50)
+  password  String     @db.VarChar(100)
+  name      String?    @db.VarChar(100)
+  role      user_role?
+  office_id Int?
+  Account   Account[]
+  Session   Session[]
+  tickets   tickets[]
+  offices   offices?   @relation(fields: [office_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_offices")
+}
+
+model Account {
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  users             users   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  users        users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum user_role {
+  super
+  admin
+  employee
+}

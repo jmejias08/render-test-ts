@@ -1,0 +1,54 @@
+my-app/
+├── app/                              # 📌 Frontend y API
+│   ├── layout.tsx                    # Layout global
+│   ├── page.tsx                      # Página de inicio
+│   ├── login/page.tsx                # /login
+│   ├── dashboard/                    # Rutas protegidas
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── clients/
+│   │       ├── page.tsx              # /dashboard/clients
+│   │       └── [id]/page.tsx         # /dashboard/clients/123
+│   └── api/
+│       ├── clients/
+│       │   ├── route.ts              # GET, POST
+│       │   └── [id]/route.ts         # GET, PUT, DELETE
+│       └── auth/login/route.ts       # Login
+│
+├── components/                       # 🧩 UI reutilizable
+│   └── ClientCard.tsx
+│
+├── controllers/                      # 🎮 Manejo de req/res
+│   └── clientController.ts
+│
+├── services/                         # ⚙️ Reglas de negocio
+│   └── clientService.ts
+│
+├── repositories/                     # 📂 Acceso a DB (ORM o SQL)
+│   └── clientRepository.ts
+│
+├── models/                           # 🧠 Entidades del dominio (con lógica)
+│   └── Client.ts                     # Puede implementar interfaces
+│
+├── types/                            # 📄 Interfaces y DTOs
+│   ├── dto/
+│   │   ├── ClientDTO.ts              # Interface para API
+│   │   └── OfficeDTO.ts
+│   ├── domain/
+│   │   ├── IClient.ts                # Interface de entidad Client
+│   │   └── IOffice.ts
+│   └── index.ts                      # Barrel opcional
+│
+├── lib/                              # 🔧 Funciones utilitarias
+│   ├── prisma.ts
+│   └── auth.ts
+│
+├── middleware.ts                     # 🔐 Protecciones de rutas
+├── prisma/
+│   ├── schema.prisma
+│   └── seed.ts
+├── public/
+├── styles/
+├── .env
+├── tsconfig.json
+└── next.config.js
